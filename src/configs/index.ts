@@ -23,7 +23,7 @@ export const CONFIG = {
         displayHeaderFooter: false,
         scale: 0.8,
         preferCSSPageSize: true,
-        timeout: 20000
+        timeout: 200000
     },
 
     BROWSER_ARGS: [
