@@ -7,6 +7,7 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
         try {
             browser = await puppeteer.launch({
                 headless: CONFIG.LAUNCHOPTIONS.HEADLESS,
+                executablePath: '/usr/bin/google-chrome-stable',
                 args: CONFIG.BROWSER_ARGS,
                 timeout: CONFIG.LAUNCHOPTIONS.TIMEOUT
                 
