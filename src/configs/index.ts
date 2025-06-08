@@ -37,7 +37,7 @@ export const CONFIG = {
         
         // Memory optimization
         '--memory-pressure-off',
-        '--max-old-space-size=256',
+        '--max-old-space-size=1024',
         '--aggressive-cache-discard',
         '--disable-background-timer-throttling',
         '--disable-backgrounding-occluded-windows',
