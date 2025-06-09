@@ -13,6 +13,7 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
                 
             })
         } catch (error) {
+            console.log(error)
             throw error
         }
 
@@ -20,7 +21,7 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
 
         await page.setContent(htmlString, {
             waitUntil: 'domcontentloaded',
-            timeout: 200000
+            timeout: 500000
         });
 
         const pdfBuffer = await page.pdf(CONFIG.PDF_OPTIONS);
@@ -28,6 +29,7 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
         return pdfBase64String
        
     } catch (error) {
+        console.log(error)
         throw error
     } finally {
         if (browser) {

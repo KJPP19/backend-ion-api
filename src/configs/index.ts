@@ -7,7 +7,7 @@ export const CONFIG = {
 
     LAUNCHOPTIONS: {
         HEADLESS: true,
-        TIMEOUT: 200000,
+        TIMEOUT: 500000,
     },
 
     PDF_OPTIONS:{
@@ -23,7 +23,7 @@ export const CONFIG = {
         displayHeaderFooter: false,
         scale: 0.8,
         preferCSSPageSize: true,
-        timeout: 200000
+        timeout: 500000
     },
 
     BROWSER_ARGS: [
