@@ -1,5 +1,6 @@
 import {CONFIG} from '../configs/index'
 import puppeteer from 'puppeteer'
+import {logger} from '../utils/logger'
 
 export const convertToBase64Pdf = async( htmlString: string ) => {
     let browser;
@@ -13,7 +14,7 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
                 
             })
         } catch (error) {
-            console.log(error)
+            logger.error('Unable to start puppeteer browser')
             throw error
         }
 
@@ -29,7 +30,7 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
         return pdfBase64String
        
     } catch (error) {
-        console.log(error)
+        logger.error('Something went wrong from convert service')
         throw error
     } finally {
         if (browser) {
