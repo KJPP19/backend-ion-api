@@ -1,5 +1,6 @@
 import express, {Request, Response} from "express";
 import convertRoute from './routes/convertRoute';
+import logger from "./utils/logger";
 //main
 const app = express();
 
@@ -17,5 +18,5 @@ app.get("/", (req: Request, res: Response) => {
 app.use('/api', convertRoute);
 
 app.listen(8080, () => {
-    console.log("server is running")
+    logger.info('Server is running')
 })
