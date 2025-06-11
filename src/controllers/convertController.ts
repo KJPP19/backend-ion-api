@@ -19,17 +19,25 @@ export const convertToPdfController = asyncHandler(async(req: Request, res: Resp
         });
     }
     
-    const base64Pdf = await convertToBase64Pdf(req.htmlBase64String);
+    const pdfBuffer = await convertToBase64Pdf(req.htmlBase64String);
 
     logger.info('PDF converted successfully', {
         requestId: requestId,
-        pdfSize: base64Pdf.length
+        pdfSize: pdfBuffer.length
     })
 
-    res.status(200).json({
-        success: true, 
-        message: 'conversion success',
-        data: { pdfBase64: base64Pdf }
-    });
+    // Set headers for direct PDF download
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="document.pdf"');
+    res.setHeader('Content-Length', pdfBuffer.length);
+    res.setHeader('Cache-Control', 'no-cache');
+    
+    // Send PDF buffer directly
+    res.end(pdfBuffer);
+
+    //res.status(200).json({
+    //    success: true, 
+     //   message: 'conversion success'
+    //});
 })
 
