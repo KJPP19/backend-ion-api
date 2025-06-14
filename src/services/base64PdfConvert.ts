@@ -4,6 +4,7 @@ import {logger} from '../utils/logger'
 
 export const convertToBase64Pdf = async( htmlString: string ) => {
     let browser;
+    let page;
     try {
         try {
             browser = await puppeteer.launch({
@@ -18,7 +19,7 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
             throw error
         }
 
-        const page = await browser.newPage();
+        page = await browser.newPage();
 
         await page.setContent(htmlString, {
             waitUntil: 'domcontentloaded',
@@ -26,14 +27,15 @@ export const convertToBase64Pdf = async( htmlString: string ) => {
         });
 
         const pdfBuffer = await page.pdf(CONFIG.PDF_OPTIONS);
-        //const pdfBase64String = Buffer.from(pdfBuffer).toString('base64');
-        //return pdfBase64String
         return pdfBuffer;
        
     } catch (error) {
         logger.error('Something went wrong from convert service')
         throw error
     } finally {
+        if (page) {
+            await page.close();
+        }
         if (browser) {
             await browser.close();
         }

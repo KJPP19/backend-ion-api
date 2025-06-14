@@ -35,9 +35,5 @@ export const convertToPdfController = asyncHandler(async(req: Request, res: Resp
     // Send PDF buffer directly
     res.end(pdfBuffer);
 
-    //res.status(200).json({
-    //    success: true, 
-     //   message: 'conversion success'
-    //});
 })
 
