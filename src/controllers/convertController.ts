@@ -9,7 +9,6 @@ export const convertToPdfController = asyncHandler(async(req: Request, res: Resp
     logger.info('PDF conversion request received', {
         method: req.method,
         url: req.url,
-        ip: req.ip
     })
     
     if (!req.htmlBase64String) {
