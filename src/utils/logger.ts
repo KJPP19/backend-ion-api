@@ -18,7 +18,7 @@ const consoleFormat = winston.format.combine(
 export const logger = winston.createLogger({
     level: 'info',
   defaultMeta: {
-    service: 'retool-rpc-backend',
+    service: 'retool-ION-backend',
     environment: process.env.NODE_ENV || 'development'
   },
   transports: [

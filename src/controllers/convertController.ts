@@ -1,6 +1,7 @@
 import {convertToBase64Pdf} from '../services/base64PdfConvert'
 import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler'
+import { processHtmlToExcel } from '../services/ExcelConvert';
 import logger from '../utils/logger';
 
 export const convertToPdfController = asyncHandler(async(req: Request, res: Response) => {
@@ -9,7 +10,6 @@ export const convertToPdfController = asyncHandler(async(req: Request, res: Resp
     logger.info('PDF conversion request received', {
         method: req.method,
         url: req.url,
-        ip: req.ip
     })
     
     if (!req.htmlBase64String) {
@@ -35,5 +35,34 @@ export const convertToPdfController = asyncHandler(async(req: Request, res: Resp
     // Send PDF buffer directly
     res.end(pdfBuffer);
 
+});
+
+export const convertToExcelController = asyncHandler(async(req: Request, res: Response) => {
+     const requestId = req.headers['x-request-id'] || `req-${Date.now()}`;
+     
+     logger.info('Excel conversion request received', {
+        method: req.method,
+        url: req.url,
+    })
+    
+    if (!req.htmlBase64String) {
+        return res.status(400).json({
+            success: false,
+            error: 'HTML string is required'
+        });
+    }
+
+    const result = await processHtmlToExcel(req.htmlBase64String);
+
+    logger.info('Excel converted successfully', {
+        requestId: requestId,
+        pdfSize: result.buffer.length
+    })
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="${result.filename}"`);
+    res.setHeader('Content-Length', result.buffer.length.toString());
+
+    res.end(result.buffer)
 })
 
